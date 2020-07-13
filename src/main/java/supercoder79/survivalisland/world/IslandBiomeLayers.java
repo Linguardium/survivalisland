@@ -1,6 +1,7 @@
 package supercoder79.survivalisland.world;
 
 import supercoder79.survivalisland.SurvivalIsland;
+import supercoder79.survivalisland.config.ConfigData;
 import supercoder79.survivalisland.layer.LandDistributionLayer;
 import supercoder79.survivalisland.layer.SeperateIslandsLayer;
 import net.minecraft.world.biome.layer.*;
@@ -21,18 +22,18 @@ public class IslandBiomeLayers {
         return layerFactory;
     }
 
-    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(LongFunction<C> contextProvider) {
-        LayerFactory<T> layerFactory = LandDistributionLayer.INSTANCE.create(contextProvider.apply(1L));
+    public static <T extends LayerSampler, C extends LayerSampleContext<T>> LayerFactory<T> build(ConfigData data, LongFunction<C> contextProvider) {
+        LayerFactory<T> layerFactory = LandDistributionLayer.INSTANCE.create(data, contextProvider.apply(1L));
 
-        if (SurvivalIsland.CONFIG.seperateBiomes) {
+        if (data.seperateBiomes) {
             layerFactory = SeperateIslandsLayer.INSTANCE.create(contextProvider.apply(3L), layerFactory);
         }
 
         layerFactory = AddDeepOceanLayer.INSTANCE.create(contextProvider.apply(50L), layerFactory);
 
-        layerFactory = stack(2001L, ScaleLayer.NORMAL, layerFactory, SurvivalIsland.CONFIG.islandSize, contextProvider);
+        layerFactory = stack(2001L, ScaleLayer.NORMAL, layerFactory, data.islandSize, contextProvider);
 
-        if (SurvivalIsland.CONFIG.generateBeaches) {
+        if (data.generateBeaches) {
             layerFactory = AddEdgeBiomesLayer.INSTANCE.create(contextProvider.apply(4L), layerFactory);
         }
 
@@ -43,8 +44,8 @@ public class IslandBiomeLayers {
         return layerFactory;
     }
 
-    public static BiomeLayerSampler build(long seed) {
-        LayerFactory<CachingLayerSampler> layerFactory = build(salt -> new CachingLayerContext(25, seed, salt));
+    public static BiomeLayerSampler build(long seed, ConfigData data) {
+        LayerFactory<CachingLayerSampler> layerFactory = build(data, salt -> new CachingLayerContext(25, seed, salt));
         return new BiomeLayerSampler(layerFactory);
     }
 }

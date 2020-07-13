@@ -1,14 +1,14 @@
 package supercoder79.survivalisland.world;
 
+import mod.linguardium.wtflib.CustomGeneratorType;
 import net.minecraft.client.world.GeneratorType;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorType;
 import net.minecraft.world.gen.chunk.SurfaceChunkGenerator;
 
-public class IslandWorldType extends GeneratorType {
-    public IslandWorldType() {
-        super("island");
-        GeneratorType.VALUES.add(this);
+public class IslandWorldType extends CustomGeneratorType {
+    public IslandWorldType(String type) {
+        super(type);
     }
 
     @Override

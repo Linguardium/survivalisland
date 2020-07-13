@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.7-SNAPSHOT'
+	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -11,9 +11,13 @@ version = project.mod_version
 group = project.maven_group
 
 minecraft {
-	accessWidener = file("src/main/resources/survivalisland.aw")
-}
 
+}
+repositories {
+	flatDir {
+		dir "./external"
+	}
+}
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -22,7 +26,10 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
+	modImplementation "mod.linguardium:wtflib:1.1.1"
+	include "mod.linguardium:wtflib:1.1.0"
+	modApi "me.shedaniel.cloth:config-2:4.5.6"
+	include "me.shedaniel.cloth:config-2:4.5.6"
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 }

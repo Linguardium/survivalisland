@@ -14,8 +14,6 @@
     "sources": ""
   },
 
-  "accessWidener" : "survivalisland.aw",
-
   "license": "LGPLv3",
   "icon": "assets/modid/icon.png",
 
@@ -23,10 +21,13 @@
   "entrypoints": {
     "main": [
       "supercoder79.survivalisland.SurvivalIsland"
+    ],
+    "client": [
+      "supercoder79.survivalisland.SurvivalIslandClient"
     ]
   },
   "mixins": [
-    "survivalisland.mixins.json"
+
   ],
 
   "depends": {
